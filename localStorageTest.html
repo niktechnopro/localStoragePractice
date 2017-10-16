@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>localStorage practice with object saving and retrieval</title>
+<style>
+#output {
+    border:1px solid black;
+    padding: .5em;
+}  
+</style>
+</head>
+<body>
+<p>There is one part to this practice problem. This exercise is designed to get you comfortable with using <code>window.localStorage</code>, the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Storage" target="_blank">Storage object</a>, and the utilities of the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" target="_blank">JSON object</a>.</p>
+<ol>
+<li>On lines 11-12, the <code>personInfo</code> object is being converted into a string using JSON.stringify(), and assigned to localStorage. Your task is to do the opposite: retrieve the string from localStorage (Storage.getItem() may help), and output it to the page using the logMessage() function that's provided. 
+</li>
+<p><b>Output:</b>
+</p>
+<div id="output"></div>
+</ol>
+</body>
+<script>
+ // Initialize our personInfo Object
+var personInfo = {
+    fname: "Bill",
+    lname: "Adama",
+    addr: "Galactica CIC",
+    email: "N/A",
+    title: "Admiral"
+};
+console.log(`this is initial object ${personInfo}`);
+// Convert the object to a string for local storage
+var jsonPerson = JSON.stringify(personInfo);
+console.log(`this is stringified object ${jsonPerson}`);
+// Stores the string in local storage - "person" is the arbitrary name of the storage
+window.localStorage.setItem("person", jsonPerson);
+// Get the string back out of local storage
+var cValue = window.localStorage.getItem("person", jsonPerson);
+// 
+console.log(`this is what we got back from localStorage ${cValue}`)
+var backToObj = JSON.parse(cValue);
+console.log(`after it was parsed back to object from string ${backToObj}`)
+// create an object which will dump out all the properties of the object
+function dumpObject(backToObj) {
+    for (var key in backToObj) {
+        // test to make sure its an object with properties
+        if (backToObj.hasOwnProperty(key)) {
+            //logMessage( backToObj[key]);
+            var msg = backToObj[key];
+            document.getElementById('output').innerHTML += msg + "<br>";
+            console.log(`logMessage: ${backToObj[key]}`)
+        }
+    }
+}
+
+ dumpObject(backToObj);
+
+// Utility function for logging convenience
+// Logs msg to the element with given id
+// If id is undefined, logs to #output
+//    function logMessage(msg, id) {
+//        if (!id) {
+//            id = "output";
+//        }
+//        document.getElementById(id).innerHTML += msg + "<br>";
+//    }   
+</script>    
+    
+</html>
+
